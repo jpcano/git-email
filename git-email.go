@@ -39,18 +39,15 @@ func FetchCommits (user, repo string) (Commits, error){
 	if err != nil {
 		return nil, err
 	}
-
+	defer res.Body.Close()
 	if res.StatusCode != http.StatusOK {
-		res.Body.Close()
 		return nil, fmt.Errorf("GitHub API request failed: %s", res.Status)
 	}
 
 	var result Commits
 	if err := json.NewDecoder(res.Body).Decode(&result); err != nil {
-		res.Body.Close()
 		return nil, err
 	}
-	res.Body.Close()
 	return result, nil
 }
 
