@@ -15,6 +15,7 @@ type jsonUser struct {
 }
 
 var commits_url string = "https://api.github.com/repos/%s/%s/commits"
+// var repos_url string = "https://api.github.com/users/%s/repos"
 
 type Commits []*CommitData
 
@@ -31,7 +32,7 @@ type Author struct {
 	Email string
 }
 
-func fetch_commits (user, repo, email string) (Commits ,error){
+func FetchCommits (user, repo string) (Commits, error){
 	// request http api
 	url := fmt.Sprintf(commits_url, user, repo)
 	res, err := http.Get(url)
@@ -53,12 +54,27 @@ func fetch_commits (user, repo, email string) (Commits ,error){
 	return result, nil
 }
 
+func GetCommitsByEmail (user, repo, email string) ([]string, error) {
+	var result []string
+	commits, err := FetchCommits(user, repo)
+	if err != nil {
+		return nil, err
+	}
+	for _, commit := range commits {
+		// fmt.Printf("%s\n", commit.HTMLURL)
+		if commit.Commit.Author.Email == email {
+			result = append(result, commit.HTMLURL)
+		}
+	}
+	return result, nil
+}
+
 func main() {
-	result, err := fetch_commits(os.Args[1], os.Args[2], os.Args[3])
+	result, err := GetCommitsByEmail(os.Args[1], os.Args[2], os.Args[3])
 	if err != nil {
 		log.Fatal(err)
 	}
 	for _, item := range result {
-		fmt.Printf("%s\n", item.HTMLURL)
+		fmt.Printf("%s\n", item)
 	}
 }
