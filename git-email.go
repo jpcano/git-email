@@ -8,12 +8,6 @@ import (
 	"os"
 )
 
-// parse json
-type jsonUser struct {
-	Name string `json:"login"`
-	Blog string `json:"blog"`
-}
-
 var commits_url string = "https://api.github.com/repos/%s/%s/commits"
 // var repos_url string = "https://api.github.com/users/%s/repos"
 
