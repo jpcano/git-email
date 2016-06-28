@@ -1,1 +1,2 @@
 # git-email
+Go / GoLang library and command line tool for finding the commits done with a particular email in a repository or GitHub User Account. Unfortunately, the API I've used doesn't use OAuth and it is limited to 60 requests per hour.
