@@ -13,9 +13,9 @@ func main() {
 
 	switch len(os.Args) {
 	case 4:
-		result, err = gitemail.GetCommitsByEmail(os.Args[1], os.Args[2], os.Args[3])
+		result, err = gitemail.GetCommitsInRepo(os.Args[1], os.Args[2], os.Args[3])
 	case 3:
-		result, err = gitemail.GetCommitsByUser(os.Args[1], os.Args[2])
+		result, err = gitemail.GetCommitsInUser(os.Args[1], os.Args[2])
 	default:
 		log.Fatal("Wrong number of arguments")
 	}

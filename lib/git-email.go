@@ -69,7 +69,7 @@ func FetchRepos(user string) (Repos, error) {
 	return result, nil
 }
 
-func GetCommitsByEmail(user, repo, email string) ([]string, error) {
+func GetCommitsInRepo(user, repo, email string) ([]string, error) {
 	var result []string
 	commits, err := FetchCommits(user, repo)
 	if err != nil {
@@ -83,7 +83,7 @@ func GetCommitsByEmail(user, repo, email string) ([]string, error) {
 	return result, nil
 }
 
-func GetCommitsByUser(user, email string) ([]string, error) {
+func GetCommitsInUser(user, email string) ([]string, error) {
 	var result []string
 	var commits []string
 	repos, err := FetchRepos(user)
@@ -91,7 +91,7 @@ func GetCommitsByUser(user, email string) ([]string, error) {
 		return nil, err
 	}
 	for _, repo := range repos {
-		commits, err = GetCommitsByEmail(user, repo.Name, email)
+		commits, err = GetCommitsInRepo(user, repo.Name, email)
 		if err != nil {
 			return nil, err
 		}
