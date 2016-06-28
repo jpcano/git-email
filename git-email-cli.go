@@ -12,12 +12,14 @@ func main() {
 	var result []string
 
 	switch len(os.Args) {
-	case 4:
-		result, err = gitemail.GetCommitsInRepo(os.Args[1], os.Args[2], os.Args[3])
 	case 3:
 		result, err = gitemail.GetCommitsInUser(os.Args[1], os.Args[2])
+	case 4:
+		result, err = gitemail.GetCommitsInRepo(os.Args[1], os.Args[2], os.Args[3])
 	default:
-		log.Fatal("Wrong number of arguments")
+		fmt.Printf("usage: git-email <GitHub User> <email>\n")
+		fmt.Printf("       git-email <GitHub User> <Repository> <email>\n")
+		os.Exit(-1)
 	}
 	if err != nil {
 		log.Fatal(err)
